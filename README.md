@@ -1,43 +1,10 @@
-# opencode-cowork-proxy
+# OpenCode Cowork Proxy Worker
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/chillibot-chillital/opencode-cowork-proxy)
 
 This project lets Claude use OpenCode Go models, and some OpenCode Zen models.
 
 Claude normally speaks the Anthropic API format. OpenCode Go mostly speaks OpenAI-compatible API format. This small Cloudflare Worker sits in the middle and translates between them.
-
-## Important Zen Limitation
-
-OpenCode Zen support is partial.
-
-This proxy currently works with Zen models that use the OpenAI-compatible `/chat/completions` endpoint.
-
-Known Zen model categories that should work through `/zen`:
-
-| Zen model category | Examples |
-|--------------------|----------|
-| OpenAI-compatible chat models | `qwen3.6-plus`, `qwen3.5-plus`, `minimax-m2.7`, `minimax-m2.5`, `minimax-m2.5-free`, `glm-5.1`, `glm-5`, `kimi-k2.5`, `kimi-k2.6`, `big-pickle`, `ling-2.6-flash`, `hy3-preview-free`, `nemotron-3-super-free` |
-
-Known Zen model categories that do not work yet through this proxy:
-
-| Zen model category | Why it does not work yet |
-|--------------------|--------------------------|
-| GPT models such as `gpt-5.5` | Zen exposes these through `/responses`, and this proxy does not yet translate Anthropic Messages to OpenAI Responses API. |
-| Claude models such as `claude-sonnet-4-6` | Zen exposes these through `/messages`; this proxy's `/zen` Claude path currently translates to OpenAI-compatible `/chat/completions`. |
-| Gemini models such as `gemini-3.1-pro` | Zen exposes these through model-specific endpoints, not the generic chat-completions path used here. |
-
-Use `/go` for OpenCode Go. Use `/zen` only for Zen models listed as OpenAI-compatible chat models in the [OpenCode Zen endpoint docs](https://opencode.ai/docs/zen/#endpoints).
-
-In plain English:
-
-1. You deploy this Worker to Cloudflare.
-2. You copy your Worker URL.
-3. You open Claude's **Configure third-party Inference** settings.
-4. You paste the Worker URL as the gateway URL.
-5. You paste your OpenCode Go API key.
-6. You manually add the OpenCode Go model names you want to use.
-
-After that, Claude can call supported models like `deepseek-v4-pro`, `kimi-k2.6`, or `qwen3.5-plus` through your Worker.
 
 ## Quick Claude Configuration
 
@@ -71,7 +38,29 @@ It also handles tool calls, streaming, and DeepSeek reasoning output so coding-a
 
 Important: this proxy has been live-tested with `minimax-m2.7`. Other OpenCode Go models are included from the public OpenCode Go model list, but provider behavior can vary, especially around streaming usage/token accounting.
 
-## For Developers
+## Important Zen Limitation
+
+OpenCode Zen support is partial.
+
+This proxy currently works with Zen models that use the OpenAI-compatible `/chat/completions` endpoint.
+
+Known Zen model categories that should work through `/zen`:
+
+| Zen model category | Examples |
+|--------------------|----------|
+| OpenAI-compatible chat models | `qwen3.6-plus`, `qwen3.5-plus`, `minimax-m2.7`, `minimax-m2.5`, `minimax-m2.5-free`, `glm-5.1`, `glm-5`, `kimi-k2.5`, `kimi-k2.6`, `big-pickle`, `ling-2.6-flash`, `hy3-preview-free`, `nemotron-3-super-free` |
+
+Known Zen model categories that do not work yet through this proxy:
+
+| Zen model category | Why it does not work yet |
+|--------------------|--------------------------|
+| GPT models such as `gpt-5.5` | Zen exposes these through `/responses`, and this proxy does not yet translate Anthropic Messages to OpenAI Responses API. |
+| Claude models such as `claude-sonnet-4-6` | Zen exposes these through `/messages`; this proxy's `/zen` Claude path currently translates to OpenAI-compatible `/chat/completions`. |
+| Gemini models such as `gemini-3.1-pro` | Zen exposes these through model-specific endpoints, not the generic chat-completions path used here. |
+
+Use `/go` for OpenCode Go. Use `/zen` only for Zen models listed as OpenAI-compatible chat models in the [OpenCode Zen endpoint docs](https://opencode.ai/docs/zen/#endpoints).
+
+## For Developers (OpenCode Cowork Proxy Worker)
 
 Technically, this is a Cloudflare Worker gateway that lets Anthropic/Claude clients talk to OpenAI-compatible APIs, and lets OpenAI clients talk to Anthropic-compatible APIs.
 
