@@ -23,7 +23,8 @@ We support a pay-as-you-go model. Below are the prices per 1M tokens for complet
 | Big Pickle | `big-pickle` | Free | Free | Free |
 | DeepSeek V4 Flash Free | `deepseek-v4-flash-free` | Free | Free | Free |
 | MiMo-V2.5 Free | `mimo-v2.5-free` | Free | Free | Free |
-| Nemotron 3 Super Free | `nemotron-3-super-free` | Free | Free | Free |
+| North Mini Code Free | `north-mini-code-free` | Free | Free | Free |
+| Nemotron 3 Ultra Free | `nemotron-3-ultra-free` | Free | Free | Free |
 
 These models are available at `https://opencode.ai/zen/v1/chat/completions` via the `/zen` prefix. For the full model list and latest pricing, see the [OpenCode Zen endpoint docs](https://opencode.ai/docs/zen/#endpoints).
 
@@ -84,7 +85,7 @@ Known Zen model categories that should work through `/zen`:
 
 | Zen model category | Examples |
 |--------------------|----------|
-| OpenAI-compatible chat models | `minimax-m2.7`, `minimax-m2.5`, `mimo-v2.5-free`, `glm-5.1`, `glm-5`, `kimi-k2.5`, `kimi-k2.6`, `grok-build-0.1`, `big-pickle`, `deepseek-v4-flash`, `deepseek-v4-flash-free`, `nemotron-3-super-free` |
+| OpenAI-compatible chat models | `minimax-m2.7`, `minimax-m2.5`, `mimo-v2.5-free`, `glm-5.2`, `glm-5.1`, `glm-5`, `kimi-k2.5`, `kimi-k2.6`, `grok-build-0.1`, `big-pickle`, `deepseek-v4-pro`, `deepseek-v4-flash`, `deepseek-v4-flash-free`, `north-mini-code-free`, `nemotron-3-ultra-free` |
 
 Known Zen model categories that do not work yet through this proxy:
 
@@ -92,7 +93,7 @@ Known Zen model categories that do not work yet through this proxy:
 |--------------------|--------------------------|
 | GPT models such as `gpt-5.5`, `gpt-5.5-pro`, `gpt-5.4`, `gpt-5.4-pro`, `gpt-5.3-codex`, `gpt-5.2` | Zen exposes these through `/responses`, and this proxy does not yet translate Anthropic Messages to OpenAI Responses API. |
 | Claude models such as `claude-opus-4-8`, `claude-sonnet-4-6`, `claude-haiku-4-5` | Zen exposes these through `/messages`; this proxy's `/zen` Claude path currently translates to OpenAI-compatible `/chat/completions`. |
-| Qwen models such as `qwen3.7-max`, `qwen3.6-plus`, `qwen3.5-plus` | Zen exposes these through `/messages` (Anthropic-compatible), not `/chat/completions`. |
+| Qwen models such as `qwen3.7-max`, `qwen3.7-plus`, `qwen3.6-plus`, `qwen3.5-plus` | Zen exposes these through `/messages` (Anthropic-compatible), not `/chat/completions`. |
 | Gemini models such as `gemini-3.5-flash`, `gemini-3.1-pro`, `gemini-3-flash` | Zen exposes these through model-specific endpoints, not the generic chat-completions path used here. |
 
 Use `/go` for OpenCode Go. Use `/zen` only for Zen models listed as OpenAI-compatible chat models in the [OpenCode Zen endpoint docs](https://opencode.ai/docs/zen/#endpoints).
@@ -140,9 +141,9 @@ Common OpenCode Go model IDs:
 
 | Model | Model ID | Upstream API style |
 |-------|----------|--------------------|
+| GLM-5.2 | `glm-5.2` | OpenAI-compatible |
 | GLM-5.1 | `glm-5.1` | OpenAI-compatible |
-| GLM-5 | `glm-5` | OpenAI-compatible |
-| Kimi K2.5 | `kimi-k2.5` | OpenAI-compatible |
+| Kimi K2.7 | `kimi-k2.7` | OpenAI-compatible |
 | Kimi K2.6 | `kimi-k2.6` | OpenAI-compatible |
 | DeepSeek V4 Pro | `deepseek-v4-pro` | OpenAI-compatible |
 | DeepSeek V4 Flash | `deepseek-v4-flash` | OpenAI-compatible |
@@ -152,6 +153,7 @@ Common OpenCode Go model IDs:
 | MiniMax M2.7 | `minimax-m2.7` | Anthropic-compatible upstream |
 | MiniMax M2.5 | `minimax-m2.5` | Anthropic-compatible upstream |
 | Qwen3.7 Max | `qwen3.7-max` | Anthropic-compatible upstream |
+| Qwen3.7 Plus | `qwen3.7-plus` | Anthropic-compatible upstream |
 | Qwen3.6 Plus | `qwen3.6-plus` | Anthropic-compatible upstream |
 
 For the latest list, see the OpenCode Go endpoint docs:
@@ -174,13 +176,13 @@ You can also configure Claude with a `claude.json` gateway entry. Replace the Wo
   "inferenceGatewayAuthScheme": "x-api-key",
   "inferenceModels": [
     {
+      "name": "glm-5.2"
+    },
+    {
       "name": "glm-5.1"
     },
     {
-      "name": "glm-5"
-    },
-    {
-      "name": "kimi-k2.5"
+      "name": "kimi-k2.7"
     },
     {
       "name": "kimi-k2.6"
@@ -208,6 +210,9 @@ You can also configure Claude with a `claude.json` gateway entry. Replace the Wo
     },
     {
       "name": "qwen3.7-max"
+    },
+    {
+      "name": "qwen3.7-plus"
     },
     {
       "name": "qwen3.6-plus"
