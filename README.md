@@ -364,6 +364,12 @@ test/
 └── stream.test.ts
 ```
 
+## Community Resources
+
+Community-maintained projects that complement this proxy. These are independently maintained by their respective authors.
+
+- [claude-cowork-local](https://github.com/a-a-borodin/claude-cowork-local) - A local wrapper that helps avoid shared Cloudflare IP rate limits when using the free Zen tier.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
